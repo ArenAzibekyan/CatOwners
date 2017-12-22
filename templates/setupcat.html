@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Setup Cat{% endblock %}
+
+{% block content %}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{% url 'home' %}">Кошатники</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'mycats' %}">Мои котята</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <p class="navbar-text">Привет, {{ user.username }}!</p>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Настройки <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'password_change' %}">Сменить пароль</a></li>
+                        <li><a href="#" id="userDeleteBtn">Удалить аккаунт</a></li>
+                    </ul>
+                </li>
+                <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Выйти</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center">
+                <button type="button" class="btn btn-default pull-left" id="catSetupCancelBtn">
+                    <span class="glyphicon glyphicon-menu-left"></span> Отменить
+                </button>
+                Изменить котика
+                <div style="clear: both;"></div>
+            </div>
+            <div class="panel-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="form-group">
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {% if field.field.widget.template_name == 'django/forms/widgets/date.html' %}
+                                <input type="{{ field.field.widget.input_type }}" class="form-control" id="{{ field.id_for_label }}"
+                                       name="{{ field.html_name }}" value="{{ field.value|date:'d/m/Y'|default_if_none:'' }}">
+                            {% else %}
+                                <input type="{{ field.field.widget.input_type }}" class="form-control" id="{{ field.id_for_label }}"
+                                       name="{{ field.html_name }}" value="{{ field.value|default_if_none:'' }}">
+                            {% endif %}
+                            {% if field.errors %}
+                                {% for error in field.errors %}
+                                    <p style="color: darkred">{{ error }}</p>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    {% if form.non_field_errors %}
+                        {% for error in form.non_field_errors %}
+                            <div class="alert alert-danger">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
+                    <button type="submit" class="btn btn-warning">
+                        <span class="glyphicon glyphicon-cog"></span> Изменить
+                    </button>
+                    <button type="button" class="btn btn-danger pull-right" id="catDeleteBtn">
+                        <span class="glyphicon glyphicon-remove"></span> Удалить
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

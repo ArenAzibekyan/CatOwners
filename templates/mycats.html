@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}My Cats{% endblock %}
+
+{% block content %}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{% url 'home' %}">Кошатники</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="{% url 'mycats' %}">Мои котята</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <p class="navbar-text">Привет, {{ user.username }}!</p>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Настройки <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'password_change' %}">Сменить пароль</a></li>
+                        <li><a href="#" id="userDeleteBtn">Удалить аккаунт</a></li>
+                    </ul>
+                </li>
+                <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Выйти</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <button type="button" class="btn btn-success" id="addCatBtn">
+                    <span class="glyphicon glyphicon-plus"></span> Добавить
+                </button>
+            </div>
+            {% if not catList %}
+                <div class="panel-body">
+                    <p class="text-center">Вы еще не добавили ни одного котика</p>
+                </div>
+            {% else %}
+                <table class="table table-responsive table-hover">
+                    <thead>
+                    <tr>
+                        <th>Имя котика</th>
+                        <th>День рождения</th>
+                        <th>Порода</th>
+                        <th>Волосатость</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for cat in catList %}
+                        <tr>
+                            <td>{{ cat.name }}</td>
+                            <td>{{ cat.birthday|date:'d/m/Y' }}</td>
+                            <td>{{ cat.breed }}</td>
+                            <td>{{ cat.hairiness }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

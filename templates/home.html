@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{% url 'home' %}">Кошатники</a>
+            </div>
+            {% if user.is_authenticated %}
+                <ul class="nav navbar-nav">
+                    <li><a href="{% url 'mycats' %}">Мои котята</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <p class="navbar-text">Привет, {{ user.username }}!</p>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Настройки <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'password_change' %}">Сменить пароль</a></li>
+                            <li><a href="#" id="userDeleteBtn">Удалить аккаунт</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Выйти</a></li>
+                </ul>
+            {% else %}
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{% url 'signup' %}"><span class="glyphicon glyphicon-user"></span> Зарегистрироваться</a></li>
+                    <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Войти</a></li>
+                </ul>
+            {% endif %}
+        </div>
+    </nav>
+    <div class="container">
+        <div id="slideshow">
+            <div>
+                <img src="{% static 'img/1.jpg' %}" class="img-thumbnail">
+            </div>
+            <div>
+                <img src="{% static 'img/2.jpg' %}" class="img-thumbnail">
+            </div>
+            <div>
+                <img src="{% static 'img/3.jpg' %}" class="img-thumbnail">
+            </div>
+            <div>
+                <img src="{% static 'img/4.jpg' %}" class="img-thumbnail">
+            </div>
+            <div>
+                <img src="{% static 'img/5.jpg' %}" class="img-thumbnail">
+            </div>
+        </div>
+    </div>
+{% endblock %}

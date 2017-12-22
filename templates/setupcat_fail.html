@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Setup Cat Failed{% endblock %}
+
+{% block content %}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{% url 'home' %}">Кошатники</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'mycats' %}">Мои котята</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <p class="navbar-text">Привет, {{ user.username }}!</p>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Настройки <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'password_change' %}">Сменить пароль</a></li>
+                        <li><a href="#" id="userDeleteBtn">Удалить аккаунт</a></li>
+                    </ul>
+                </li>
+                <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Выйти</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <h4>Уууупс, что-то пошло не так! {{ errorMes }}</h4>
+    </div>
+{% endblock %}

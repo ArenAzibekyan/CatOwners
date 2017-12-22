@@ -1,0 +1,28 @@
+@font-face {
+    font-family: Lobster;
+    src: url(../fonts/Lobster-Regular.ttf);
+}
+
+.navbar-header > .navbar-brand {
+    font-family: Lobster !important;
+}
+
+@media screen and (max-width: 767px) {
+    body {
+        padding-top: 250px;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    body {
+        padding-top: 70px;
+    }
+}
+
+#slideshow {
+    position: relative;
+}
+
+#slideshow > div {
+    position: absolute;
+}
